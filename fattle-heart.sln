@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{A0E36754-A0B9-0BDF-2601-897EB956EF5D}") = "fattle-heart", "Assembly-CSharp-firstpass.csproj", "{035A92F7-1778-2A37-A42B-71F8C78FBDE3}"
+EndProject
+Project("{A0E36754-A0B9-0BDF-2601-897EB956EF5D}") = "fattle-heart", "Assembly-CSharp.csproj", "{F9A60217-2B7D-11AA-59E0-2FF5388EEC22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{035A92F7-1778-2A37-A42B-71F8C78FBDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{035A92F7-1778-2A37-A42B-71F8C78FBDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{035A92F7-1778-2A37-A42B-71F8C78FBDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{035A92F7-1778-2A37-A42B-71F8C78FBDE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A60217-2B7D-11AA-59E0-2FF5388EEC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A60217-2B7D-11AA-59E0-2FF5388EEC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A60217-2B7D-11AA-59E0-2FF5388EEC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9A60217-2B7D-11AA-59E0-2FF5388EEC22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
