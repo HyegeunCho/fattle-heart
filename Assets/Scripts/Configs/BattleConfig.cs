@@ -7,6 +7,6 @@ public class BattleConfig : MonoBehaviour {
 	public static int SCREEN_WIDTH = 1280;
 	public static int SCREEN_HEIGHT = 720;
 
-	public static float MOUSE_STATIONLY_OFFSET = 5f;
+	public static float MOUSE_STATIONLY_OFFSET = 1f;
 
 }
