@@ -7,14 +7,14 @@ Library/
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
-./ExportedObj/
-./obj/
+ExportedObj/
+obj/
 *.svd
 *.userprefs
-./*.csproj
+*.csproj
 *.pidb
 *.suo
-./*.sln
+*.sln
 *.user
 *.unityproj
 *.booproj
@@ -33,11 +33,11 @@ Thumbs.db
 *.sublime-workspace
 .settings/launch.json
 .settings/settings.json
-./.settings/settings.json
-./Assets/UnityVS.meta
-./Assets/UnityVS/
+.settings/settings.json
+Assets/UnityVS.meta
+Assets/UnityVS/
 .gitattributes
-./Assets/LocalData.meta
-./Assets/LocalData/
+Assets/LocalData.meta
+Assets/LocalData/
 *.orig
 *.cache
