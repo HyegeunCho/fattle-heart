@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PlayerView = fattleheart.battle.PlayerView;
+using PlayerMoveController = fattleheart.battle.PlayerMoveController;
 
 public struct SMouseData
 {
@@ -29,7 +29,7 @@ public struct SMouseData
 
 public class TouchManager : MonoBehaviour {
 
-    public List<fattleheart.battle.PlayerView> touchDelegators;
+    public List<fattleheart.battle.PlayerMoveController> touchDelegators;
     private SMouseData _mouseData;
 
     void Start () {
@@ -65,7 +65,7 @@ public class TouchManager : MonoBehaviour {
             _mouseData.buttonDownPosition.z = 0;
             _mouseData.buttonDownTime = Time.time;
 
-            foreach (PlayerView pv in touchDelegators)
+            foreach (PlayerMoveController pv in touchDelegators)
             {
                 pv.OnMouseButtonDown(_mouseData);
             }
@@ -93,7 +93,7 @@ public class TouchManager : MonoBehaviour {
             _mouseData.buttonUpTime = Time.time;
             _mouseData.isDragged = !(_mouseData.buttonDownPosition.Equals(_mouseData.buttonUpPosition));
 
-            foreach (PlayerView pv in touchDelegators)
+            foreach (PlayerMoveController pv in touchDelegators)
             {
                 pv.OnMouseButtonUp(_mouseData);
             }
