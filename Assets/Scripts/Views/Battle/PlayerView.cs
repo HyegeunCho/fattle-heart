@@ -6,10 +6,10 @@ namespace fattleheart.battle
 {
 	public partial class PlayerView : MonoBehaviour {
 
-		
+
 
         [SerializeField]
-        private Collider2D _attackRange;
+        private PlayerAttackRange _attackRangeChecker;
 
         [SerializeField]
         private GameObject _statusBarContainer;
@@ -17,6 +17,8 @@ namespace fattleheart.battle
         private SpriteRenderer _hpBar;
         [SerializeField]
         private SpriteRenderer _energyBar;
+
+
 
 		
 
@@ -73,9 +75,12 @@ namespace fattleheart.battle
             _energyPoint = 0;
 		}
         
-        void FixedUpdate()
+        void Update()
         {
-            //HealthPoint = HealthPoint - 1;
+            if (_attackRangeChecker.AttackTargets.Count > 0)
+            {
+                Debug.Log("");
+            }
         }
 
         
