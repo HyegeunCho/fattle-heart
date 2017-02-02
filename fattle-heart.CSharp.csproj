@@ -81,23 +81,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BattleFieldManager.cs" />
-    <Compile Include="Assets\HamburgerPlateSlot.cs" />
-    <Compile Include="Assets\PlayerAttackRange.cs" />
-    <Compile Include="Assets\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\Configs\BattleConfig.cs" />
     <Compile Include="Assets\Scripts\Configs\KitchenConfig.cs" />
     <Compile Include="Assets\Scripts\Configs\WarriorConfig.cs" />
     <Compile Include="Assets\Scripts\Enums\BattleEnums.cs" />
     <Compile Include="Assets\Scripts\Enums\Enums.cs" />
     <Compile Include="Assets\Scripts\HamburgerPlate.cs" />
+    <Compile Include="Assets\Scripts\HamburgerPlateSlot.cs" />
+    <Compile Include="Assets\Scripts\Managers\Battle\BattleFieldManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Battle\BattleManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Battle\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\Managers\Kitchen\CookingManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Kitchen\KitchenManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TouchManager.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkDef.cs" />
+    <Compile Include="Assets\Scripts\Network\PacketQueue.cs" />
+    <Compile Include="Assets\Scripts\Network\TransportTCP.cs" />
     <Compile Include="Assets\Scripts\SellingFood.cs" />
     <Compile Include="Assets\Scripts\Utility\BattleUtility.cs" />
     <Compile Include="Assets\Scripts\Views\Battle\EnemyView.cs" />
+    <Compile Include="Assets\Scripts\Views\Battle\PlayerAttackRange.cs" />
     <Compile Include="Assets\Scripts\Views\Battle\PlayerView.cs" />
     <Compile Include="Assets\Scripts\Views\Battle\WarriorStatusBar.cs" />
   </ItemGroup>
