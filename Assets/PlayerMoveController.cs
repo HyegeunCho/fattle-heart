@@ -13,6 +13,38 @@ namespace fattleheart.battle
 
         private List<Vector3> waypoints;
 
+        public delegate void MoveDelegate(SMouseData outDat, List<Vector3> outWaypoints = null);
+
+
+        MoveDelegate _onStartMoveCallback;
+        MoveDelegate _onStopMoveCallback;
+
+        public void AddStartMoveCallback(MoveDelegate inCallback)
+        {
+            _onStartMoveCallback += inCallback;
+        }
+
+        public void AddStopMoveCallback(MoveDelegate inCallback)
+        {
+            _onStopMoveCallback += inCallback;
+        }
+
+        public void RemoveStartMoveCallback(MoveDelegate inCallback)
+        {
+            _onStartMoveCallback -= inCallback;
+        }
+
+        public void RemoveStopMoveCallback(MoveDelegate inCallback)
+        {
+            _onStopMoveCallback -= inCallback;
+        }
+
+        public void ClearCallbacks()
+        {
+            _onStopMoveCallback = null;
+            _onStartMoveCallback = null;
+        }
+
         // Use this for initialization
         void Start()
         {
