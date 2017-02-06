@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Net;
+using UniRx;
+
+
 
 namespace fattleheart.battle
 {
@@ -20,7 +23,7 @@ namespace fattleheart.battle
             Error
         }
 
-        enum HostType
+        public enum HostType
         {
             None = 0, 
             Server, 
@@ -30,8 +33,24 @@ namespace fattleheart.battle
         private Mode m_mode;
         private string serverAddress;
         private HostType hostType;
+        public HostType GetHostType
+        {
+            get
+            {
+                return hostType;
+            }
+        }
+
         private const int m_port = 50765;
         private TransportTCP m_transport = null;
+        public TransportTCP TCP
+        {
+            get
+            {
+                return m_transport;
+            }
+        }
+
         private int m_counter = 0;
 
         void Awake()
@@ -39,10 +58,20 @@ namespace fattleheart.battle
             m_mode = Mode.SelectHost;
             hostType = HostType.None;
 
-            // Network 클래스 컴포넌트 취득
-            GameObject obj = new GameObject("Network");
-            m_transport = obj.AddComponent<TransportTCP>();
-            DontDestroyOnLoad(obj);
+            GameObject obj = GameObject.Find("Network");
+            if (obj == null)
+            {
+                obj = new GameObject("Network");
+                m_transport = obj.AddComponent<TransportTCP>();
+                DontDestroyOnLoad(obj);
+            }
+            else
+            {
+                OnUpdateDisconnection();
+            }
+
+            
+            
 
             // 호스트명 획득
             string hostname = Dns.GetHostName();
@@ -56,6 +85,13 @@ namespace fattleheart.battle
             }
         }
 
+        void Start()
+        {
+            Observable.EveryUpdate().Select(_ => m_mode).DistinctUntilChanged().Subscribe(_ => Debug.Log(string.Format("[BattleNetworkManager] m_mode = {0}", m_mode.ToString())));
+            Observable.EveryUpdate().Select(_ => m_transport.IsConnected()).DistinctUntilChanged().Subscribe(_ => Debug.Log(string.Format("[BattleNetworkManager] isConnected - {0}", m_transport.IsConnected())));
+        }
+
+
         // Update is called once per frame
         void Update()
         {
@@ -68,13 +104,10 @@ namespace fattleheart.battle
                     OnUpdateConnection();
                     break;
                 case Mode.Game:
-                    //OnUpdateGame();
+                    OnUpdateGame();
                     break;
                 case Mode.Disconnection:
-                    //OnUpdateDisconnection();
-                    break;
-                case Mode.Error:
-                    OnUpdateError();
+                    OnUpdateDisconnection();
                     break;
             }
 
@@ -84,20 +117,30 @@ namespace fattleheart.battle
         public void OnSelectServer()
         {
             hostType = HostType.Server;
+            Debug.Log("[BattleNetworkManager] (OnSelectServer) - Change HostType to Server");
         }
 
         public void OnSelectClient()
         {
             hostType = HostType.Client;
+            Debug.Log("[BattleNetworkManager] (OnSelectServer) - Change HostType to Client");
         }
 
         public void OnUpdateConnection()
         {
             if (m_transport.IsConnected() == true)
             {
+                Debug.Log("[BattleNetworkManager] (OnUpdateConnection) - Change Mode to Mode.Game");
                 m_mode = Mode.Game;
+            }
+        }
 
-                // TOOD 배틀 씬 열기
+        public void OnUpdateGame()
+        {
+            if (m_transport.IsConnected() == true)
+            {
+                Debug.Log("[BattleNetworkManager] (OnUpdateGame) - Load Battle Scene");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Battle");
             }
         }
 
@@ -129,25 +172,25 @@ namespace fattleheart.battle
             }
         }
 
-
-        public void OnSelectClient()
+        public void OnUpdateDisconnection()
         {
-            string targetAddress = serverAddress;
-
-            if (txtIPAddress != null)
+            switch (hostType)
             {
-                targetAddress = txtIPAddress.text;
+                case HostType.Server:
+                    m_transport.StopServer();
+                    break;
+                case HostType.Client:
+                    m_transport.Disconnect();
+                    break;
+                default:
+                    break;
             }
 
-            bool ret = m_transport.Connect(targetAddress, m_port);
-            m_mode = ret ? Mode.Connection : Mode.Error;
-
-            if (m_mode == Mode.Connection)
-            {
-                OnUpdateConnection();
-            }
+            m_mode = Mode.SelectHost;
+            hostType = HostType.None;
+            string hostname = Dns.GetHostName();
+            IPAddress[] adrList = Dns.GetHostAddresses(hostname);
+            serverAddress = adrList[0].ToString();
         }
-
     }
-
 }

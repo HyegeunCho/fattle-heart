@@ -82,16 +82,4 @@ public class PacketQueue
         m_streamBuffer.Position = 0;
         m_streamBuffer.SetLength(0);
     }
-
-
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

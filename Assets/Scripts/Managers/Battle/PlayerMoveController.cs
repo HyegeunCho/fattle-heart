@@ -8,13 +8,14 @@ namespace fattleheart.battle
     public class PlayerMoveController : MonoBehaviour
     {
 
+        private TransportTCP m_network = null;
+
         [SerializeField]
         private LineRenderer _waypoint;
 
         private List<Vector3> waypoints;
 
         public delegate void MoveDelegate(SMouseData outDat, List<Vector3> outWaypoints = null);
-
 
         MoveDelegate _onStartMoveCallback;
         MoveDelegate _onStopMoveCallback;
@@ -49,6 +50,44 @@ namespace fattleheart.battle
         void Start()
         {
             waypoints = new List<Vector3>();
+
+            GameObject networkObject = GameObject.Find("Network");
+            if (networkObject != null)
+            {
+                m_network = networkObject.GetComponent<TransportTCP>();
+                m_network.RegisterEventHandler(NetworkEventCallback);
+            }
+        }
+
+        private void NetworkEventCallback(NetEventState state)
+        {
+            switch (state.type)
+            {
+                case NetEventType.Disconnect:
+                    Debug.Log("[PlayerMoveController] (NetworkEventCallback) - Network Disconnected");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("BattleMenu");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void Update()
+        {
+            if (m_network != null)
+            {
+                byte[] buffer = new byte[sizeof(float) * 3];
+                int recvSize = m_network.Receive(ref buffer, buffer.Length);
+
+                if (recvSize <= 0)
+                {
+                    return;
+                }
+
+                Vector3 targetPosition = BattleUtility.ConvertFromByteArrayToVector3(buffer);
+                MoveTo(targetPosition);
+
+            }
         }
 
         public void OnMouseButtonDown(SMouseData inMouseData)
@@ -137,9 +176,21 @@ namespace fattleheart.battle
 
         private void MoveTo(SMouseData inMouseData)
         {
+            if (m_network != null)
+            {
+                byte[] willSendData = BattleUtility.ConvertFromVector3ToByteArray(inMouseData.buttonUpPosition);
+                m_network.Send(willSendData, willSendData.Length);
+            }
+
             //Debug.Log (string.Format ("[PlayerView-MoveTo] Move from {0} To {1}", gameObject.transform.position.ToString(), inMouseData.buttonUpPosition.ToString ()));
             StopAllCoroutines();
             StartCoroutine(StepTo(gameObject.transform.position, inMouseData.buttonUpPosition, 100));
+        }
+
+        private void MoveTo(Vector3 inVector)
+        {
+            StopAllCoroutines();
+            StartCoroutine(StepTo(gameObject.transform.position, inVector, 100));
         }
         #endregion
 
