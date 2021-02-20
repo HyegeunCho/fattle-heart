@@ -202,7 +202,7 @@ namespace fattleheart.battle
                 Debug.Log(string.Format("[PlayerView=DrawWaypoint] movePositions == null"));
                 return;
             }
-            _waypoint.numPositions = inWaypoints.Count;
+            _waypoint.positionCount = inWaypoints.Count;
             _waypoint.SetPositions(inWaypoints.ToArray());
             _waypoint.sortingOrder = -1;
         }
